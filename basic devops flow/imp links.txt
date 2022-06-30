@@ -1,0 +1,138 @@
+Architect COE
+
+setting up azure databricks
+develop CICD around it
+4-5 weeks project
+
+5-6 hours a week
+US time zone
+
+
+
+
+---
+useful links:
+---
+
+https://medium.com/geekculture/ci-cd-on-azure-databricks-using-azure-devops-82441386c6e8
+https://levelup.gitconnected.com/continuous-integration-and-delivery-in-azure-databricks-1ba56da3db45
+--
+https://www.linkedin.com/pulse/ci-cd-azure-databricks-using-devops-deepak-rajak
+--
+https://medium.com/@bedatse/azure-devops-ci-cd-with-azure-databricks-and-data-factory-part-1-c05a44536a8e
+https://menziess.github.io/howto/run/databricks-notebooks-from-devops/
+https://github.com/databrickslabs/terraform-provider-databricks
+
+https://www.youtube.com/watch?v=VIQc1SqhqJw&ab_channel=PragmaticWorks
+https://www.youtube.com/watch?v=R7tJZelEt-Q&ab_channel=DaveDoesDemos
+
+https://medium.com/road-to-data-engineering/databricks-notebook-promotion-using-azure-devops-5f3da5306751
+https://data.solita.fi/automatized-code-deployment-from-azure-devops-to-databricks/
+
+---
+
+accelerator for databricks
+
+we want to cut down the time when client start their journey on databricks, including CICD
+
+azure devops --> 
+0. bootstrapping databricks cluster
+1. build a pipeline to execute a notebook, fetch from github and execute it on github,
+2. execute spark jobs , scheduling them
+3. tested and promoted to production
+4. client may have the cluster , or not, what can we do here? 
+
+use parameters to get if cluster is already there..
+
+if cluster not there built a new one, needs to be parameterised
+
+
+
+elk stack configured on azure with all the integrations, dashboards in kibana
+
+
+
+list out the tasks:
+
+Tasks:
+1. databricks bootstrapping
+- create a databricks cluster using arm templates
+- make sure the user has the admin rights to create a resource on Azure
+- while using azure devops if we are using azure repo then databricks will automatically detect that, else we need to specify the right url (in case we are using github)
+
+
+2. making sure the code gets deployed at right workspace(assuming the databricks cluster is already provisioned and workspaces are in place)
+- we can use PAT to deploy the notebooks to the right cluster/workspace
+- need to have azure key vault in place to store the PAT secret and to use it across multiple jobs
+- need to make sure the develop and release branch are in total sync
+- as soon as the develop branch is merged into release the production build should trigger
+- to deploy the code to the right workspace we have to manage the URLs in the jobs i.e for dev we will have different URL and same goes for production
+
+
+
+--------------
+
+Databricks bootstrapping – 16 hrs
+	Azure Subscription with VNET, CIDR block, Resource Group, ADLS
+	Permissions to create/manage above mentioned Azure Resources
+	Permissions to spin up and down of the compute for Databricks
+	Azure AD for security
+	Azure DNS
+CI-CD for Databricks – 16 hrs
+	Azure DevOps instance
+	Git/Azure DevOps for Source Control/Versioning
+	Source Control structure for releases and branching
+	Events to trigger work-flow
+	Azure Key-vault instance
+	Spark notebooks/jobs
+	
+---
+
+
+https://www.mssqltips.com/sqlservertip/6931/mount-azure-data-lake-storage-gen2-account-databricks/
+
+
+
+client id: 736050f0-fe78-4566-bae8-c793f084c8ab
+secret value: nKf8Q~lYS2t~P58XCR6BvrYI~.BzbHQER-w_daKT
+
+TENANT ID: 317d9d2d-2b18-4d16-9c92-ca0a5eb30802
+
+
+Key vault:
+
+vault uri: https://databrickstoadls.vault.azure.net/
+resource id: /subscriptions/11a35dd5-8b8e-447c-9a2a-c1bb1a5ead8f/resourceGroups/rama_databricks_accelerator_eval/providers/Microsoft.KeyVault/vaults/databrickstoadls
+
+
+Databricks PAT: 
+
+dapi50149260d8d94a9180c5e936d41c02d4-3
+
+
+https://adb-8286572789240727.7.azuredatabricks.net/?o=8286572789240727#notebook/589935686467098/command/589935686467099
+
+Cluster ID:
+0511-124839-r56igxqd
+
+eq(variables['countmatch'], 'true')
+
+=====================================================
+
+databricks bootstrapping:
+
+https://federico.is/posts/2020/09/16/mount-azure-data-lake-in-databricks-via-terraform/
+
+https://github.com/samgabrail/databricks-azure
+
+https://github.com/databrickslabs/terraform-provider-databricks/blob/master/docs/resources/mount.md
+
+
+create scope in databricks:
+
+https://adb-2817400765785165.5.azuredatabricks.net/?o=2817400765785165#secrets/createScope
+
+key vault bootstrapping:
+
+https://gist.github.com/cdennig/4866a74b341a0079b5a59052fa735dbc
+

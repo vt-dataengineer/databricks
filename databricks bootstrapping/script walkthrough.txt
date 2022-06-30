@@ -1,0 +1,46 @@
+Release pipeline:
+
+1. Bash Script:
+# Write your commands here
+
+echo $databrickstoadls
+echo "909090909090"
+echo $(clientid)
+echo "67676767676767"
+echo $(tenantid)
+echo "##vso[task.setvariable variable=TF_VAR_TENANTID;]$(tenantid)"
+echo "*********************"
+echo $TF_VAR_TENANTID
+echo "##vso[task.setvariable variable=TF_VAR_CLIENTID;]$(clientid)"
+echo "********************"
+echo $TF_VAR_CLIENTID
+
+2. Run Python Script:
+import json
+f = open('/home/vsts/work/r1/a/_terraform-databricks/databricks/config.json')
+data = json.load(f)
+
+clusterid = data['adlsmount']['cluster_id']
+storageaccount = data['adlsmount']['az_storageaccount']
+container = data['adlsmount']['az_storagecontainer']
+mountname = data['adlsmount']['mount_name']
+secretscope = data['adlsmount']['client_secret_scope']
+secretkey = data['adlsmount']['client_secret_key']
+
+print(clusterid)
+print(mountname)
+print(container)
+
+#print ('##vso[task.setvariable variable=check]False')
+
+print ('##vso[task.setvariable variable=TF_VAR_CLUSTERID]{}'.format(clusterid))
+print ('##vso[task.setvariable variable=TF_VAR_STORAGEACCOUNT]{}'.format(storageaccount))
+print ('##vso[task.setvariable variable=TF_VAR_CONTAINER]{}'.format(container))
+print ('##vso[task.setvariable variable=TF_VAR_MOUNTNAME]{}'.format(mountname))
+print ('##vso[task.setvariable variable=TF_VAR_SECRETSCOPE]{}'.format(secretscope))
+print ('##vso[task.setvariable variable=TF_VAR_SECRETKEY]{}'.format(secretkey))
+
+3. Install terraform latest
+4. Terraform init
+5. Terraform plan
+6. Terraform apply
