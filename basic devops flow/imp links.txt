@@ -93,10 +93,10 @@ https://www.mssqltips.com/sqlservertip/6931/mount-azure-data-lake-storage-gen2-a
 
 
 
-client id: 736050f0-fe78-4566-bae8-c793f084c8ab
-secret value: nKf8Q~lYS2t~P58XCR6BvrYI~.BzbHQER-w_daKT
+client id: <client-id>
+secret value: <secret value>
 
-TENANT ID: 317d9d2d-2b18-4d16-9c92-ca0a5eb30802
+TENANT ID: <tennnt id>
 
 
 Key vault:
@@ -107,7 +107,7 @@ resource id: /subscriptions/11a35dd5-8b8e-447c-9a2a-c1bb1a5ead8f/resourceGroups/
 
 Databricks PAT: 
 
-dapi50149260d8d94a9180c5e936d41c02d4-3
+<dapi_pat>
 
 
 https://adb-8286572789240727.7.azuredatabricks.net/?o=8286572789240727#notebook/589935686467098/command/589935686467099
